@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Background,
     Button,
@@ -16,7 +16,8 @@ import {
     DatePicker,
     TimePicker,
     ErrorMessage,
-    DetailsList,
+    Dropzone,
+    Chip,
     Popover,
     Grid,
     GridList,
@@ -24,23 +25,30 @@ import {
     GridRow,
     Switch,
     RadioGroup,
-    RadioItem,
     CheckBox,
     SocialMediaButtons,
-    TextButton,
     Slider,
     useTheme,
     ImageBackground,
     blue,
     SegmentedControl,
     Avatar,
-    BlurredModal,
     Bubble,
     Image,
-    AudioPlayer
+    AudioPlayer,
+    CrossButton,
+    ActivityIndicator,
+    TextFieldMask,
+    IconTextField,
+    MessageInput,
+    BlurrediOSModal,
+    TableContainer,
+    DetailsRow
 } from '@bma98/fractal-ui';
 import { BuggyComponent } from './examples/BuggyComponent';
 import { ThemeSwapper } from './examples/ThemeSwapper';
+import { FileIcon } from './assets/FileIcon';
+import { SearchIcon } from './assets/SearchIcon';
 
 const styleVariants = {
     layerInitial: { scale: 0, opacity: 0, backgroundColor: blue.base100 },
@@ -82,455 +90,630 @@ function logErrorToService(error: Error, componentStack: string) {
     console.log('Log Error To Service: ', { error, componentStack });
 }
 
-function PopoverContainer(): JSX.Element {
+function AudioPlayerFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return <AudioPlayer tracks={tracks} marginTop={spacings.s} marginBottom={spacings.xl} />;
+}
+
+function SwapThemeFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
     return (
-        <Box width={'50%'} alignSelf='center'>
-            <Button variant='alternative' text='Pasion' />
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <ThemeSwapper />
         </Box>
     );
 }
 
-function BlurredModalFragment(): JSX.Element {
+function DropZoneFragment(): JSX.Element {
     const { spacings } = useTheme();
 
-    const [blurredModalVisible, setBlurredModalVisible] = useState(false);
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Dropzone onChangeAcceptedFiles={(files) => console.log('Accepted files: ', files)} />
+        </Box>
+    );
+}
 
-    const toggleBlurredModal = useCallback(() => setBlurredModalVisible((currentValue) => !currentValue), []);
+function Chipfragment(): JSX.Element {
+    const { colors, spacings } = useTheme();
 
     return (
-        <React.Fragment>
-            <Button variant='main' text='Show Blurred Modal' onPress={toggleBlurredModal} />
-            <BlurredModal visible={blurredModalVisible} dismissText={'Done'} onDismiss={toggleBlurredModal}>
-                <Box margin={spacings.m}>
-                    <Button variant='warning' text='Dismiss Modal' onPress={toggleBlurredModal} />
-                </Box>
-            </BlurredModal>
-        </React.Fragment>
+        <Layer flexDirection={'row'} marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Chip marginRight={spacings.s} text={'Ver reportes'} />
+            <Chip marginRight={spacings.s}>
+                <FileIcon height={24} width={24} fill={colors.text} />
+            </Chip>
+        </Layer>
+    );
+}
+
+function CrossButtonFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box alignContent={'center'} marginTop={spacings.s} marginBottom={spacings.xl}>
+            <CrossButton />
+        </Box>
+    );
+}
+
+function ActivityIndicatorFragment(): JSX.Element {
+    const { colors, spacings } = useTheme();
+    const width = 25;
+    const height = 25;
+    const marginRight = 10;
+
+    return (
+        <Box alignContent={'center'} flexDirection={'row'} marginTop={spacings.s} marginBottom={spacings.xl}>
+            <ActivityIndicator width={width} height={height} color={colors.mainInteractiveColor} marginRight={marginRight} />
+            <ActivityIndicator width={width} height={height} color={colors.alternativeInteractiveColor} marginRight={marginRight} />
+            <ActivityIndicator width={width} height={height} color={colors.successInteractiveColor} marginRight={marginRight} />
+            <ActivityIndicator width={width} height={height} color={colors.warningInteractiveColor} marginRight={marginRight} />
+            <ActivityIndicator width={width} height={height} color={colors.dangerInteractiveColor} marginRight={marginRight} />
+            <ActivityIndicator width={width} height={height} color={colors.text} marginRight={marginRight} />
+        </Box>
+    );
+}
+
+function AvatarImageFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box flexDirection={'row'} marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Avatar source={'https://picsum.photos/id/370/200'} label='Avatar' />
+            <Image
+                source={'https://picsum.photos/id/870/200/300'}
+                label='Asset'
+                marginLeft={spacings.m}
+                width={100}
+                height={64}
+                borderRadius={16}
+            />
+        </Box>
+    );
+}
+
+function ImageBackgroundFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <ImageBackground
+                source={'https://picsum.photos/id/870/200/300'}
+                width={200}
+                height={200}
+                borderRadius={16}
+                justifyContent={'center'}
+            >
+                <Text variant={'button'}>Lorem Ipsum is simply dummy text.</Text>
+            </ImageBackground>
+        </Box>
     );
 }
 
 function SegmentedControlFragment(): JSX.Element {
+    const { spacings } = useTheme();
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     return (
-        <React.Fragment>
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
             <SegmentedControl
                 selectedIndex={selectedIndex}
                 values={['One', 'Two', 'Three', 'Four']}
                 onChange={(value, index) => {
+                    console.log(value);
                     setSelectedIndex(index);
                 }}
                 onValueChange={(value) => {
                     console.log('On Value Change: ', value);
                 }}
             />
-        </React.Fragment>
+        </Box>
     );
 }
 
 function SliderFragment(): JSX.Element {
+    const { spacings } = useTheme();
     const [sliderValue, setSliderValue] = useState(0);
-
-    const handleSliderValue = useCallback((value: number) => {
-        setSliderValue(value);
-    }, []);
+    const handleSliderValue = (value: number) => setSliderValue(value);
 
     return (
-        <React.Fragment>
-            <Slider onSlidingComplete={handleSliderValue} />
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Slider onSlidingComplete={handleSliderValue} minimumValue={0} maximumValue={100} />
             <Text variant={'normal'}>{`Value: ${sliderValue}`}</Text>
-        </React.Fragment>
+        </Box>
     );
 }
 
 function SwitchFragment(): JSX.Element {
+    const { spacings } = useTheme();
     const [isEnabled, setIsEnabled] = useState(false);
 
     return (
-        <React.Fragment>
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
             <Switch value={isEnabled} onValueChange={(value) => setIsEnabled(value)} />
-        </React.Fragment>
+        </Box>
     );
 }
 
 function CheckBoxFragment(): JSX.Element {
+    const { spacings } = useTheme();
     const [isChecked, setIsChecked] = useState(false);
 
     return (
-        <React.Fragment>
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
             <CheckBox value={isChecked} onValueChange={(value) => setIsChecked(value)} label={'Selectable'} />
-        </React.Fragment>
+        </Box>
+    );
+}
+
+function RadioFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <RadioGroup
+                radioButtons={[
+                    { value: '1', label: 'Option One' },
+                    { value: '2', label: 'Option Two' }
+                ]}
+                onValueChange={(value: string) => console.log(value)}
+            />
+        </Box>
+    );
+}
+
+function BubbleFragment(): JSX.Element {
+    const { colors, spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Layer backgroundColor={colors.background} paddingTop={10} paddingBottom={10}>
+                <Bubble
+                    arrowPosition={'left'}
+                    color={colors.foreground}
+                    onLongPress={() => console.log('On Long Press')}
+                    onPress={() => console.log('on Press')}
+                >
+                    <Text variant='normal'>Este es un mensaje dentro de una burbuja </Text>
+                </Bubble>
+                <Layer marginBottom={spacings.m} />
+                <Bubble arrowPosition={'right'} color={colors.mainInteractiveColor}>
+                    <Text variant='normal' color={'white'}>
+                        Este es un mensaje dentro de una burbuja
+                    </Text>
+                </Bubble>
+            </Layer>
+        </Box>
     );
 }
 
 function LayerAnimatedFragment(): JSX.Element {
     const { spacings } = useTheme();
-
     const [layerVariant, setLayerVariant] = useState('layerVisible');
-
-    const toggleVariant = useCallback(
-        () => setLayerVariant((currentValue) => (currentValue === 'layerVisible' ? 'layerInitial' : 'layerVisible')),
-        []
-    );
+    const toggleVariant = () => setLayerVariant((currentValue) => (currentValue === 'layerVisible' ? 'layerInitial' : 'layerVisible'));
 
     return (
-        <React.Fragment>
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
             <Layer
                 height={100}
                 width={100}
                 initial={'layerInitial'}
+                backgroundColor={'#FFF'}
                 animate={layerVariant}
                 variants={styleVariants}
-                backgroundColor={'#FFF'}
-                marginBottom={spacings.m}
             />
             <Button
+                width={268}
                 variant={'main'}
                 alignSelf={'center'}
-                width={268}
-                marginBottom={spacings.m}
                 text={'Toggle animation'}
                 onPress={toggleVariant}
+                marginTop={spacings.s}
             />
-        </React.Fragment>
+        </Box>
+    );
+}
+
+function TextFragment(): JSX.Element {
+    const { colors, spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Text variant={'title'} marginBottom={spacings.s}>
+                Title text.
+            </Text>
+            <Text variant={'title2'} marginBottom={spacings.s}>
+                Title2 text.
+            </Text>
+            <Text variant={'title3'} marginBottom={spacings.s}>
+                Title3 text.
+            </Text>
+            <Text variant={'subtitle'} marginBottom={spacings.s}>
+                Subtitle text.
+            </Text>
+            <Text variant={'placeholder'} marginBottom={spacings.s}>
+                Placeholder text.
+            </Text>
+            <Text variant={'normal'} marginBottom={spacings.s}>
+                Normal text.
+            </Text>
+            <Text variant={'label'} marginBottom={spacings.s}>
+                Label text..
+            </Text>
+            <Text variant={'small'} marginBottom={spacings.s}>
+                Small text.
+            </Text>
+            <Text variant={'smallLabel'} marginBottom={spacings.s}>
+                Small label text.
+            </Text>
+            <Text variant={'button'} marginBottom={spacings.s}>
+                Button text.
+            </Text>
+            <Text variant={'textButton'} marginBottom={spacings.s}>
+                Text button text.
+            </Text>
+            <Text variant={'normal'} selectable marginBottom={spacings.s}>
+                Selectable text.
+            </Text>
+            <Text variant={'normal'} selectable selectionColor={colors.alternativeInteractiveColor} marginBottom={spacings.s}>
+                Selectable text with different color (Only on Android).
+            </Text>
+        </Box>
+    );
+}
+
+function BoxContentFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Text variant={'normal'} marginBottom={spacings.m}>
+                Use it to separate your components into blocks.
+            </Text>
+            <Separator marginBottom={spacings.m} />
+            <Text variant={'normal'}>Like this.</Text>
+        </Box>
+    );
+}
+
+function SeparatorsFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Text variant={'normal'} marginBottom={spacings.s}>
+                Below is the separator that is more visible with the isAtBackgroundLevel variable
+            </Text>
+            <Separator isAtBackgroundLevel marginBottom={spacings.s} />
+            <Text variant={'normal'} marginBottom={spacings.s}>
+                Below is the separator that is less visible without the isAtBackgroundLevel variable
+            </Text>
+            <Separator marginBottom={spacings.s} />
+            <Text variant={'normal'}>Some text.</Text>
+        </Box>
+    );
+}
+
+function ColorPickerFragment(): JSX.Element {
+    const { colors, spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <ColorPicker
+                onColorChange={(color) => console.log(color)}
+                colors={[
+                    colors.mainInteractiveColor,
+                    colors.alternativeInteractiveColor,
+                    colors.successInteractiveColor,
+                    colors.dangerInteractiveColor,
+                    colors.warningInteractiveColor
+                ]}
+            />
+        </Box>
+    );
+}
+
+function TextFieldFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Layer marginBottom={spacings.xl}>
+            <Text variant={'title'} marginBottom={spacings.s}>
+                Text Field Example
+            </Text>
+            <Box marginBottom={spacings.xl}>
+                <TextField placeholder='Escribe aquí' />
+            </Box>
+            <Text variant={'title'} marginBottom={spacings.s}>
+                Text Field Mask Example
+            </Text>
+            <Box>
+                <TextFieldMask
+                    type={'money'}
+                    placeholder={'Monto'}
+                    onChangeText={(maskedText, rawText) => console.log({ maskedText, rawText })}
+                />
+            </Box>
+        </Layer>
+    );
+}
+
+function IconTextFieldFragment(): JSX.Element {
+    const { spacings } = useTheme();
+    const renderSearchIcon = React.useCallback((color: string, size: number) => <SearchIcon height={size} width={size} fill={color} />, []);
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <IconTextField leftImage={renderSearchIcon} placeholder='Escribe aquí' />
+        </Box>
+    );
+}
+
+function SearchBarFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <SearchBar addEventBasedSearch onSearch={(query: string) => console.log('Query: ', query)} placeholder='Escribe aquí' />
+        </Box>
+    );
+}
+
+function MessageInputFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <MessageInput onSend={(message: string) => console.log('Message: ', message)} placeholder='Escribe aquí' />
+        </Box>
+    );
+}
+
+function PickerFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Picker
+                onChange={(value) => console.log(value)}
+                iosDoneText='Done'
+                items={[
+                    ['1', 'Hoy'],
+                    ['2', 'Ayer'],
+                    ['3', 'Prueba'],
+                    ['4', 'Cuatro'],
+                    ['5', 'Cinco']
+                ]}
+                defaultValue={'3'}
+            />
+        </Box>
+    );
+}
+
+function DatePickerFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <DatePicker iosDoneText='Done' onChange={(date) => console.log('Local Date: ', date.toLocaleDateString())} />
+        </Box>
+    );
+}
+
+function TimePickerFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <TimePicker iosDoneText='Done' onChange={(date) => console.log(date.toLocaleDateString())} />
+        </Box>
+    );
+}
+
+function BlurredModalFragment(): JSX.Element {
+    const { spacings } = useTheme();
+    const [blurredModalVisible, setBlurredModalVisible] = useState(false);
+    const toggleBlurredModal = () => setBlurredModalVisible((currentValue) => !currentValue);
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Button variant='main' text='Show Blurred Modal' onPress={toggleBlurredModal} />
+            <BlurrediOSModal visible={blurredModalVisible} dismissText={'Done'} onDismiss={toggleBlurredModal}>
+                <Box margin={spacings.m}>
+                    <Button variant='warning' text='Dismiss Modal' onPress={toggleBlurredModal} />
+                </Box>
+            </BlurrediOSModal>
+        </Box>
     );
 }
 
 function MiddleCellModalFragment(): JSX.Element {
+    const { spacings } = useTheme();
     const [middleCellVisible, setMiddleCellVisible] = useState(false);
-
-    const toggleMiddleCell = useCallback(() => setMiddleCellVisible((currentValue) => !currentValue), []);
+    const toggleMiddleCell = () => setMiddleCellVisible((currentValue) => !currentValue);
 
     return (
-        <React.Fragment>
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
             <Button variant='main' text='Show Middle Cell Modal' onPress={toggleMiddleCell} />
             <MiddleCellModal visible={middleCellVisible} onDismiss={toggleMiddleCell}>
                 <Box>
                     <Button variant='warning' text='Dismiss Cell Modal' onPress={toggleMiddleCell} />
                 </Box>
             </MiddleCellModal>
-        </React.Fragment>
+        </Box>
+    );
+}
+
+function ErrorMessageFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return (
+        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
+            <ErrorMessage onError={logErrorToService}>
+                <BuggyComponent />
+            </ErrorMessage>
+        </Box>
+    );
+}
+
+function PopoverContent(): JSX.Element {
+    const { spacings } = useTheme();
+    return (
+        <Box marginTop={spacings.m} width={'100%'}>
+            <Button variant='alternative' text='Pasion' />
+        </Box>
     );
 }
 
 function PopoverFragment(): JSX.Element {
     const { spacings } = useTheme();
-
     const [popoverVisible, setPopoverVisible] = useState(false);
-
-    const togglePopover = useCallback(() => {
-        setPopoverVisible((currentValue) => !currentValue);
-    }, [setPopoverVisible]);
+    const togglePopover = () => setPopoverVisible((currentValue) => !currentValue);
 
     return (
-        <React.Fragment>
+        <Box marginTop={spacings.s} marginBottom={spacings.xl} alignItems='center'>
             <Popover
+                placement={'bottom'}
                 active={popoverVisible}
-                popoverChildren={() => {
-                    return <PopoverContainer />;
-                }}
+                onRequestClose={() => setPopoverVisible(false)}
+                popoverChildren={PopoverContent}
             >
-                <Button variant={'main'} onPress={togglePopover} text={'Popover'} marginBottom={spacings.m} />
+                <Button variant={'main'} width={220} onPress={togglePopover} text={'Popover'} />
             </Popover>
-        </React.Fragment>
+        </Box>
     );
 }
 
-function Content(): JSX.Element {
-    const { spacings, colors } = useTheme();
-
-    // const [visible, setVisible] = useState(false);
-    // const toggleVisible = useCallback(() => setVisible((currentValue) => !currentValue), []);
-
-    // const [bottomCellVisible, setBottomCellVisible] = useState(false);
-    // const toggleBottomCell = useCallback(() => setBottomCellVisible((currentValue) => !currentValue), []);
+function DetailsListFragment(): JSX.Element {
+    const { spacings } = useTheme();
 
     return (
+        <TableContainer
+            label='2'
+            title='Title'
+            titleColorVariant='warning'
+            labelColorVariant='warning'
+            marginTop={spacings.s}
+            marginBottom={spacings.xl}
+        >
+            {detailsCardContent.map((item, index) => {
+                const isLastItem = index === detailsCardContent.length - 1;
+                return <DetailsRow key={item[0]} title={item[0]} details={item[1]} addSeparator={!isLastItem} />;
+            })}
+        </TableContainer>
+    );
+}
+
+function GridListFragment(): JSX.Element {
+    const { colors, spacings } = useTheme();
+
+    return (
+        <GridList
+            data={['One', 'Two', 'Three', 'Four']}
+            numColumns={2}
+            backgroundColor={colors.warningInteractiveColor}
+            marginTop={spacings.s}
+            marginBottom={spacings.xl}
+            renderItem={() => <Box margin={4} height={60} minWidth={30} />}
+        />
+    );
+}
+
+function GridFragment(): JSX.Element {
+    const { colors, spacings } = useTheme();
+
+    return (
+        <Box height={300} marginTop={spacings.s} marginBottom={spacings.xl}>
+            <Grid>
+                <GridColumn backgroundColor={colors.dangerInteractiveColor300} />
+                <GridColumn>
+                    <GridRow backgroundColor={colors.warningInteractiveColor300} />
+                    <GridRow backgroundColor={colors.mainInteractiveColor300} />
+                </GridColumn>
+            </Grid>
+        </Box>
+    );
+}
+
+function SocialMediaButtonsFragment(): JSX.Element {
+    const { spacings } = useTheme();
+
+    return <SocialMediaButtons marginTop={spacings.s} marginBottom={spacings.xl} />;
+}
+
+function Content(): JSX.Element {
+    return (
         <PaddingLayer>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Audio Player
-            </Text>
-            <AudioPlayer tracks={tracks} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Swap Theme
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <ThemeSwapper />
-            </Box>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Avatar y Image Example
-            </Text>
-            <Box marginBottom={spacings.m} flexDirection={'row'}>
-                <Avatar source={'https://picsum.photos/id/370/200'} label='Avatar' />
-                <Image
-                    source={'https://picsum.photos/id/870/200/300'}
-                    label='Asset'
-                    marginLeft={spacings.m}
-                    width={100}
-                    height={64}
-                    borderRadius={16}
-                />
-            </Box>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                ImageBackground Example
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <ImageBackground
-                    source={'https://picsum.photos/id/870/200/300'}
-                    width={200}
-                    height={200}
-                    borderRadius={16}
-                    justifyContent={'center'}
-                >
-                    <Text variant='button'>Lorem Ipsum is simply dummy text.</Text>
-                </ImageBackground>
-            </Box>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Blurred Modal Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <BlurredModalFragment />
-            </Box>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Button Group Example
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <SegmentedControlFragment />
-            </Box>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Slider Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <SliderFragment />
-            </Box>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Switch Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <SwitchFragment />
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Radio Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <RadioGroup
-                    radioButtons={[
-                        { value: '1', label: 'Option One' },
-                        { value: '2', label: 'Option Two' }
-                    ]}
-                    onChange={(item: RadioItem) => console.log(item)}
-                />
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Bubble Example:
-            </Text>
-            <Box>
-                <Layer backgroundColor={colors.background} paddingTop={10} paddingBottom={10}>
-                    <Bubble
-                        arrowPosition={'left'}
-                        color={colors.foreground}
-                        onLongPress={() => console.log('On Long Press')}
-                        onPress={() => console.log('on Press')}
-                    >
-                        <Text variant='normal'>Este es un mensaje dentro de una burbuja </Text>
-                    </Bubble>
-                    <Layer marginBottom={spacings.m} />
-                    <Bubble arrowPosition={'right'} color={colors.mainInteractiveColor}>
-                        <Text variant='normal' color={'white'}>
-                            Este es un mensaje dentro de una burbuja
-                        </Text>
-                    </Bubble>
-                </Layer>
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Check Box Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <CheckBoxFragment />
-            </Box>
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Layer Animated Example:
-            </Text>
+            <Text variant={'title'}>Audio Player</Text>
+            <AudioPlayerFragment />
+            <Text variant={'title'}>Swap Theme</Text>
+            <SwapThemeFragment />
+            <Text variant={'title'}>Dropzone Example</Text>
+            <DropZoneFragment />
+            <Text variant={'title'}>Chip Example</Text>
+            <Chipfragment />
+            <Text variant={'title'}>Cross Button Example</Text>
+            <CrossButtonFragment />
+            <Text variant={'title'}>Activity Indicator Example</Text>
+            <ActivityIndicatorFragment />
+            <Text variant={'title'}>Avatar and Image Example</Text>
+            <AvatarImageFragment />
+            <Text variant={'title'}>ImageBackground Example</Text>
+            <ImageBackgroundFragment />
+            <Text variant={'title'}>Button Group Example</Text>
+            <SegmentedControlFragment />
+            <Text variant={'title'}>Slider Example</Text>
+            <SliderFragment />
+            <Text variant={'title'}>Switch Example</Text>
+            <SwitchFragment />
+            <Text variant={'title'}>Check Box Example</Text>
+            <CheckBoxFragment />
+            <Text variant={'title'}>Radio Example</Text>
+            <RadioFragment />
+            <Text variant={'title'}>Bubble Example</Text>
+            <BubbleFragment />
+            <Text variant={'title'}>Layer Animated Example</Text>
             <LayerAnimatedFragment />
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Box Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <Text variant={'normal'} marginBottom={spacings.m}>
-                    Use it to separate your components into blocks.
-                </Text>
-                <Separator marginBottom={spacings.m} />
-                <Text variant={'normal'}>Like this.</Text>
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Box Animated Example:
-            </Text>
-            <Box height={100} width={100} initial={'initial'} animate={'visible'} variants={styleVariants} marginBottom={spacings.m} />
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Text Button Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <TextButton marginBottom={spacings.m} variant={'main'}>
-                    Main
-                </TextButton>
-                <TextButton marginBottom={spacings.m} variant={'alternative'}>
-                    Alternative
-                </TextButton>
-                <TextButton marginBottom={spacings.m} variant={'success'}>
-                    Success
-                </TextButton>
-                <TextButton marginBottom={spacings.m} variant={'warning'}>
-                    Warning
-                </TextButton>
-                <TextButton variant={'danger'}>Danger</TextButton>
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Color Picker Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <ColorPicker
-                    onColorChange={(color) => console.log(color)}
-                    colors={[
-                        colors.mainInteractiveColor,
-                        colors.alternativeInteractiveColor,
-                        colors.successInteractiveColor,
-                        colors.dangerInteractiveColor,
-                        colors.warningInteractiveColor
-                    ]}
-                />
-            </Box>
-            {/*<Separator isAtBackgroundLevel marginBottom={spacings.m} />*/}
-            {/*<Text marginBottom={spacings.m} variant={'title'}>*/}
-            {/*    Dimmed Modal Example:*/}
-            {/*</Text>*/}
-            {/*<Box marginBottom={spacings.m}>*/}
-            {/*    <Button variant='main' text='Show Modal' onPress={toggleVisible} />*/}
-            {/*    <DimmedModal visible={visible} onDismiss={toggleVisible}>*/}
-            {/*        <Box>*/}
-            {/*            <Button variant='warning' text='Dismiss Modal' onPress={toggleVisible} />*/}
-            {/*        </Box>*/}
-            {/*    </DimmedModal>*/}
-            {/*</Box>*/}
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Middle Cell Modal Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <MiddleCellModalFragment />
-            </Box>
-            {/*<Separator isAtBackgroundLevel marginBottom={spacings.m} />*/}
-            {/*<Text marginBottom={spacings.m} variant={'title'}>*/}
-            {/*    Bottom Cell Modal Example:*/}
-            {/*</Text>*/}
-            {/*<Box marginBottom={spacings.m}>*/}
-            {/*    <Button variant='main' text='Show Bottom Cell Modal' onPress={toggleBottomCell} />*/}
-            {/*    <BottomCellModal visible={bottomCellVisible} onDismiss={toggleBottomCell}>*/}
-            {/*        <Box>*/}
-            {/*            <Button variant='warning' text='Dismiss Cell Modal' onPress={toggleBottomCell} />*/}
-            {/*        </Box>*/}
-            {/*    </BottomCellModal>*/}
-            {/*</Box>*/}
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Text Field Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <TextField placeholder='Escribe aquí' />
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Icon Text Field Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <SearchBar placeholder='Escribe aquí' />
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Picker Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <Picker
-                    onChange={(value) => console.log(value)}
-                    iosDoneText='Done'
-                    items={[
-                        ['1', 'Hoy'],
-                        ['2', 'Ayer'],
-                        ['3', 'Prueba'],
-                        ['4', 'Cuatro'],
-                        ['5', 'Cinco']
-                    ]}
-                    initialValue={'3'}
-                />
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Date Picker Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <DatePicker iosDoneText='Done' onChange={(date) => console.log('Local Date: ', date.toLocaleDateString())} />
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Time Picker Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <TimePicker iosDoneText='Done' onChange={(date) => console.log(date.toLocaleDateString())} />
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Error Message Example:
-            </Text>
-            <Box marginBottom={spacings.m}>
-                <ErrorMessage onError={logErrorToService}>
-                    <BuggyComponent />
-                </ErrorMessage>
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                PopoverView Example:
-            </Text>
+            <Text variant={'title'}>Text Example</Text>
+            <TextFragment />
+            <Text variant={'title'}>Box Example</Text>
+            <BoxContentFragment />
+            <Text variant={'title'}>Separator Example</Text>
+            <SeparatorsFragment />
+            <Text variant={'title'}>Color Picker Example</Text>
+            <ColorPickerFragment />
+            <TextFieldFragment />
+            <Text variant={'title'}>Icon Text Field Example</Text>
+            <IconTextFieldFragment />
+            <Text variant={'title'}>Search Bar Example</Text>
+            <SearchBarFragment />
+            <Text variant={'title'}>Message Input Example</Text>
+            <MessageInputFragment />
+            <Text variant={'title'}>Picker Example</Text>
+            <PickerFragment />
+            <Text variant={'title'}>Date Picker Example</Text>
+            <DatePickerFragment />
+            <Text variant={'title'}>Time Picker Example</Text>
+            <TimePickerFragment />
+            <Text variant={'title'}>Blurred Modal Example</Text>
+            <BlurredModalFragment />
+            <Text variant={'title'}>Middle Cell Modal Example</Text>
+            <MiddleCellModalFragment />
+            <Text variant={'title'}>Error Message Example</Text>
+            <ErrorMessageFragment />
+            <Text variant={'title'}>PopoverView Example</Text>
             <PopoverFragment />
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Details List Example:
-            </Text>
-            <DetailsList title='Title' titleColorVariant='warning' details={detailsCardContent} marginBottom={spacings.m} />
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Grid List Example:
-            </Text>
-            <GridList
-                backgroundColor={colors.warningInteractiveColor}
-                data={['One', 'Two', 'Three', 'Four']}
-                renderItem={() => <Box margin={4} height={60} minWidth={30} />}
-                numColumns={2}
-                marginBottom={spacings.m}
-            />
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Grid Example:
-            </Text>
-            <Box height={300} marginBottom={spacings.m}>
-                <Grid>
-                    <GridColumn backgroundColor={colors.dangerInteractiveColor300} />
-                    <GridColumn>
-                        <GridRow backgroundColor={colors.warningInteractiveColor300} />
-                        <GridRow backgroundColor={colors.mainInteractiveColor300} />
-                    </GridColumn>
-                </Grid>
-            </Box>
-            <Separator isAtBackgroundLevel marginBottom={spacings.m} />
-            <Text marginBottom={spacings.m} variant={'title'}>
-                Social Media Buttons:
-            </Text>
-            <SocialMediaButtons />
+            <Text variant={'title'}>Details List Example</Text>
+            <DetailsListFragment />
+            <Text variant={'title'}>Grid List Example</Text>
+            <GridListFragment />
+            <Text variant={'title'}>Grid Example</Text>
+            <GridFragment />
+            <Text variant={'title'}>Social Media Buttons</Text>
+            <SocialMediaButtonsFragment />
         </PaddingLayer>
     );
 }
