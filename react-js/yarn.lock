@@ -1197,7 +1197,7 @@
 
 "@bma98/fractal-ui@https://github.com/BrandonMA/fractal-ui#web-support":
   version "2.0.0"
-  resolved "https://github.com/BrandonMA/fractal-ui#317df2affe4f62654df20e41516844d92feff689"
+  resolved "https://github.com/BrandonMA/fractal-ui#8b7c266858ed734fb1677d5a5277e6128f93176d"
   dependencies:
     "@bma98/size-class" "^2.2.0"
     styled-components "^5.2.1"
