@@ -28,6 +28,7 @@ import { MultiSelectInputExample } from './examples/MultiSelectInputExample';
 import { TextsFragments } from './fragments/Texts';
 import { ContainersFragments } from './fragments/Containers';
 import { ButtonsFragments } from './fragments/Buttons';
+import { TextInputsFragments } from './fragments/TextInputs';
 import { ModalsFragments } from './fragments/Modals';
 import { MessagesFragments } from './fragments/Messages';
 import { TablesFragments } from './fragments/Tables';
@@ -368,6 +369,7 @@ function Content(): JSX.Element {
             <ButtonsFragments />
             <Text variant={'title'}>Color Picker Example</Text>
             <ColorPickerFragment />
+            <TextInputsFragments />
             <ModalsFragments />
             <MessagesFragments />
             <Text variant={'title'}>PopoverView Example</Text>
