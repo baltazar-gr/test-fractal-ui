@@ -339,9 +339,7 @@ function BubbleFragment(): JSX.Element {
           color={colors.foreground}
           onLongPress={() => console.log('On Long Press')}
           onPress={() => console.log('on Press')}>
-          <Text variant="normal">
-            Este es un mensaje dentro de una burbuja{' '}
-          </Text>
+          <Text variant="normal">Este es un mensaje dentro de una burbuja</Text>
         </Bubble>
         <Layer marginBottom={spacings.m} />
         <Bubble arrowPosition={'right'} color={colors.mainInteractiveColor}>

@@ -41,7 +41,7 @@ export function MultiSelectInputExample(): JSX.Element {
     };
 
     const removeTag = (tag: Tag) => {
-        setSelectedTags((currentTags) => currentTags.filter((item) => item.id != tag.id));
+        setSelectedTags((currentTags) => currentTags.filter((item) => item.id !== tag.id));
     };
 
     return (
