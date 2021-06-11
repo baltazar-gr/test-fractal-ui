@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme, Box, Layer, Separator, Button, Text, blue } from '@bma98/fractal-ui';
+
 const styleVariants = {
     layerInitial: { scale: 0, opacity: 0, backgroundColor: blue.base100 },
     layerVisible: { scale: 1, opacity: 1, backgroundColor: blue.base },

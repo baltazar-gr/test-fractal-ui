@@ -16,10 +16,11 @@
     "@react-native-picker/picker": "^1.15.0",
     "expo-av": "^9.1.2",
     "expo-blur": "^9.0.3",
+    "expo-document-picker": "^9.1.2",
     "framer-motion": "^4.1.8",
     "react": "17.0.1",
     "react-native": "0.64.0",
-    "react-native-reanimated": "^2.1.0",
+    "react-native-reanimated": "^2.0.0",
     "react-native-svg": "^12.1.1",
     "react-native-unimodules": "^0.13.3",
     "styled-components": "^5.2.3"

@@ -21,8 +21,7 @@ import {
     Switch,
     Text,
     useTheme,
-    AudioPlayer,
-    PlacementType
+    PlacementType,
 } from '@bma98/fractal-ui';
 import { ThemeSwapper } from './examples/ThemeSwapper';
 import { MultiSelectInputExample } from './examples/MultiSelectInputExample';
@@ -36,36 +35,6 @@ import { MessagesFragments } from './fragments/Messages';
 import { TablesFragments } from './fragments/Tables';
 import { GridsFragments } from './fragments/Grids';
 import { FileIcon } from './assets/FileIcon';
-
-const tracks = [
-    {
-        title: 'Rubber Robot',
-        //artist: 'Podington Bear',
-        audioSrc: 'https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Podington_Bear_-_Rubber_Robot.mp3',
-        image: 'https://picsum.photos/id/870/200/300'
-        //color: 'lightblue'
-    },
-    {
-        title: 'All Of Me',
-        //artist: 'Mildred Bailey',
-        audioSrc: 'https://ia800304.us.archive.org/34/items/PaulWhitemanwithMildredBailey/PaulWhitemanwithMildredBailey-AllofMe.mp3',
-        image: 'https://picsum.photos/id/872/200/300'
-        //color: 'lightgreen'
-    },
-    {
-        title: 'Instant Crush',
-        //artist: 'Daft Punk ft. Julian Casablancas',
-        audioSrc: require('./assets/song.mp3'),
-        image: 'https://picsum.photos/id/875/200/300'
-        //color: 'orange'
-    }
-];
-
-function AudioPlayerFragment(): JSX.Element {
-    const { spacings } = useTheme();
-
-    return <AudioPlayer tracks={tracks} marginTop={spacings.s} marginBottom={spacings.xl} />;
-}
 
 function SwapThemeFragment(): JSX.Element {
     const { spacings } = useTheme();
@@ -358,8 +327,6 @@ function SocialMediaButtonsFragment(): JSX.Element {
 function Content(): JSX.Element {
     return (
         <PaddingLayer>
-            <Text variant={'title'}>Audio Player</Text>
-            <AudioPlayerFragment />
             <Text variant={'title'}>Swap Theme</Text>
             <SwapThemeFragment />
             <Text variant={'title'}>Dropzone Example</Text>
