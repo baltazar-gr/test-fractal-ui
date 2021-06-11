@@ -22,6 +22,7 @@ import {
   Text,
   useTheme,
   PlacementType,
+  FileIcon,
 } from '@bma98/fractal-ui';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {ThemeSwapper} from './examples/ThemeSwapper';
@@ -35,7 +36,6 @@ import {ModalsFragments} from './fragments/Modals';
 import {MessagesFragments} from './fragments/Messages';
 import {TablesFragments} from './fragments/Tables';
 import {GridsFragments} from './fragments/Grids';
-import {FileIcon} from './assets/FileIcon';
 
 function SwapThemeFragment(): JSX.Element {
   const {spacings} = useTheme();

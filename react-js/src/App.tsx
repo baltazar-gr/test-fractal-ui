@@ -22,6 +22,7 @@ import {
     Text,
     useTheme,
     PlacementType,
+    FileIcon
 } from '@bma98/fractal-ui';
 import { ThemeSwapper } from './examples/ThemeSwapper';
 import { MultiSelectInputExample } from './examples/MultiSelectInputExample';
@@ -34,7 +35,6 @@ import { ModalsFragments } from './fragments/Modals';
 import { MessagesFragments } from './fragments/Messages';
 import { TablesFragments } from './fragments/Tables';
 import { GridsFragments } from './fragments/Grids';
-import { FileIcon } from './assets/FileIcon';
 
 function SwapThemeFragment(): JSX.Element {
     const { spacings } = useTheme();
