@@ -13,7 +13,7 @@
     "@bma98/fractal-ui": "https://github.com/BrandonMA/fractal-ui#web-support",
     "@react-native-community/datetimepicker": "^3.4.6",
     "@react-native-community/slider": "^3.0.3",
-    "@react-native-picker/picker": "^1.15.0",
+    "@react-native-picker/picker": "1.9.2",
     "expo-av": "^9.1.2",
     "expo-blur": "^9.0.3",
     "expo-document-picker": "^9.1.2",
@@ -23,7 +23,7 @@
     "react-native-reanimated": "^2.0.0",
     "react-native-svg": "^12.1.1",
     "react-native-unimodules": "^0.13.3",
-    "styled-components": "^5.2.3"
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -32,6 +32,7 @@
     "@types/jest": "^26.0.20",
     "@types/react-native": "^0.64.0",
     "@types/react-test-renderer": "^16.9.2",
+    "@types/styled-components": "^5.1.10",
     "babel-jest": "^26.6.3",
     "eslint": "^7.14.0",
     "jest": "^26.6.3",
