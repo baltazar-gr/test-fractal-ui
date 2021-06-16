@@ -3,7 +3,6 @@ import {
     ActivityIndicator,
     Background,
     Box,
-    Bubble,
     Button,
     CheckBox,
     Chip,
@@ -194,31 +193,6 @@ function RadioFragment(): JSX.Element {
     );
 }
 
-function BubbleFragment(): JSX.Element {
-    const { colors, spacings } = useTheme();
-
-    return (
-        <Box marginTop={spacings.s} marginBottom={spacings.xl}>
-            <Layer backgroundColor={colors.background} paddingTop={10} paddingBottom={10}>
-                <Bubble
-                    arrowPosition={'left'}
-                    color={colors.foreground}
-                    onLongPress={() => console.log('On Long Press')}
-                    onPress={() => console.log('on Press')}
-                >
-                    <Text variant='normal'>Este es un mensaje dentro de una burbuja </Text>
-                </Bubble>
-                <Layer marginBottom={spacings.m} />
-                <Bubble arrowPosition={'right'} color={colors.mainInteractiveColor}>
-                    <Text variant='normal' color={'white'}>
-                        Este es un mensaje dentro de una burbuja
-                    </Text>
-                </Bubble>
-            </Layer>
-        </Box>
-    );
-}
-
 function SeparatorsFragment(): JSX.Element {
     const { spacings } = useTheme();
 
@@ -290,7 +264,7 @@ function PopoverFragment(): JSX.Element {
     return (
         <Box marginTop={spacings.s} marginBottom={spacings.xl} alignItems='center'>
             <Popover placement={placement} active={popoverVisible} onRequestClose={requestClose} popoverChildren={() => <PopoverContent />}>
-                <Button variant={'main'} width={220} onPress={togglePopover} text={'Popover'} />
+                {(ref) => <Button ref={ref} variant={'main'} width={220} onPress={togglePopover} text={'Popover'} />}
             </Popover>
         </Box>
     );
@@ -349,8 +323,6 @@ function Content(): JSX.Element {
             <CheckBoxFragment />
             <Text variant={'title'}>Radio Example</Text>
             <RadioFragment />
-            <Text variant={'title'}>Bubble Example</Text>
-            <BubbleFragment />
             <TextsFragments />
             <ContainersFragments />
             <Text variant={'title'}>Separator Example</Text>
@@ -374,12 +346,12 @@ function Content(): JSX.Element {
 export default function App(): JSX.Element {
     return (
         <FractalAppRoot handleThemeManually>
-        <Background>
-            <SafeAreaView />
-            <ScrollView>
-                <Content />
-            </ScrollView>
-        </Background>
-    </FractalAppRoot>
+            <Background>
+                <SafeAreaView />
+                <ScrollView>
+                    <Content />
+                </ScrollView>
+            </Background>
+        </FractalAppRoot>
     );
 }

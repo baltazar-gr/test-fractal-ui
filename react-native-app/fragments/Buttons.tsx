@@ -45,17 +45,32 @@ export function TextButtonFragment(): JSX.Element {
       <TextButton variant={'main'} marginBottom={spacings.s}>
         Main
       </TextButton>
+      <TextButton variant={'main'} marginBottom={spacings.s} disabled>
+        Main disabled
+      </TextButton>
       <TextButton variant={'alternative'} marginBottom={spacings.s}>
         Alternative
+      </TextButton>
+      <TextButton variant={'alternative'} marginBottom={spacings.s} disabled>
+        Alternative disabled
       </TextButton>
       <TextButton variant={'danger'} marginBottom={spacings.s}>
         Danger
       </TextButton>
+      <TextButton variant={'danger'} marginBottom={spacings.s} disabled>
+        Danger disabled
+      </TextButton>
       <TextButton variant={'warning'} marginBottom={spacings.s}>
         Warning
       </TextButton>
+      <TextButton variant={'warning'} marginBottom={spacings.s} disabled>
+        Warning disabled
+      </TextButton>
       <TextButton variant={'success'} marginBottom={spacings.s}>
         Success
+      </TextButton>
+      <TextButton variant={'success'} marginBottom={spacings.s} disabled>
+        Success disabled
       </TextButton>
       <TextButton
         variant={'main'}
@@ -65,11 +80,27 @@ export function TextButtonFragment(): JSX.Element {
         Main with left icon
       </TextButton>
       <TextButton
+        disabled
+        variant={'main'}
+        flexDirection={'row'}
+        marginBottom={spacings.s}
+        leftIcon={color => <SearchIcon height={20} width={20} fill={color} />}>
+        Main with left icon disabled
+      </TextButton>
+      <TextButton
         variant={'alternative'}
         flexDirection={'row'}
         marginBottom={spacings.s}
         rightIcon={color => <SearchIcon height={20} width={20} fill={color} />}>
         Alternative with right icon
+      </TextButton>
+      <TextButton
+        disabled
+        variant={'alternative'}
+        flexDirection={'row'}
+        marginBottom={spacings.s}
+        rightIcon={color => <SearchIcon height={20} width={20} fill={color} />}>
+        Alternative with right icon disabled
       </TextButton>
       <TextButton
         variant={'danger'}
@@ -79,21 +110,49 @@ export function TextButtonFragment(): JSX.Element {
         rightIcon={color => <NextIcon height={20} width={20} fill={color} />}>
         Danger with left and right icon
       </TextButton>
+      <TextButton
+        disabled
+        variant={'danger'}
+        flexDirection={'row'}
+        marginBottom={spacings.s}
+        leftIcon={color => <PreviousIcon height={20} width={20} fill={color} />}
+        rightIcon={color => <NextIcon height={20} width={20} fill={color} />}>
+        Danger with left and right icon disabled
+      </TextButton>
     </Box>
   );
 }
 
 export function ButtonFragment(): JSX.Element {
-  const {colors, spacings} = useTheme();
+  const {spacings} = useTheme();
 
   return (
     <Box marginTop={spacings.s} marginBottom={spacings.xl}>
       <Button variant={'main'} text={'Main'} marginBottom={spacings.s} />
       <Button
         variant={'main'}
+        text={'Main disabled'}
+        marginBottom={spacings.s}
+        disabled
+      />
+      <Button
+        variant={'main'}
         text={'Main reduced'}
         marginBottom={spacings.s}
         reduceColor
+      />
+      <Button
+        variant={'main'}
+        text={'Main reduced disabled'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled
+      />
+      <Button
+        variant={'main'}
+        text={'Main loading'}
+        marginBottom={spacings.s}
+        loading
       />
       <Button
         variant={'alternative'}
@@ -102,25 +161,70 @@ export function ButtonFragment(): JSX.Element {
       />
       <Button
         variant={'alternative'}
+        text={'Alternative disabled'}
+        marginBottom={spacings.s}
+        disabled
+      />
+      <Button
+        variant={'alternative'}
         text={'Alternative reduced'}
         marginBottom={spacings.s}
         reduceColor
       />
+      <Button
+        variant={'alternative'}
+        text={'Alternative reduced disabled'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled
+      />
       <Button variant={'danger'} text={'Danger'} marginBottom={spacings.s} />
+      <Button
+        variant={'danger'}
+        text={'Danger disabled'}
+        marginBottom={spacings.s}
+        disabled
+      />
       <Button
         variant={'danger'}
         text={'Danger reduced'}
         marginBottom={spacings.s}
         reduceColor
       />
+      <Button
+        variant={'danger'}
+        text={'Danger reduced disabled'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled
+      />
       <Button variant={'warning'} text={'Warning'} marginBottom={spacings.s} />
+      <Button
+        variant={'warning'}
+        text={'Warning disabled'}
+        marginBottom={spacings.s}
+        disabled
+      />
       <Button
         variant={'warning'}
         text={'Warning reduced'}
         marginBottom={spacings.s}
         reduceColor
       />
+      <Button
+        variant={'warning'}
+        text={'Warning reduced disabled'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled
+      />
       <Button variant={'success'} text={'Success'} marginBottom={spacings.s} />
+      <Button
+        variant={'success'}
+        text={'Success'}
+        marginBottom={spacings.s}
+        disabled
+      />
       <Button
         variant={'success'}
         text={'Success reduced'}
@@ -128,55 +232,35 @@ export function ButtonFragment(): JSX.Element {
         reduceColor
       />
       <Button
-        variant={'content'}
-        text={'Button with content variant'}
+        variant={'success'}
+        text={'Success reduced disabled'}
         marginBottom={spacings.s}
+        reduceColor
+        disabled
       />
       <Button
         variant={'content'}
         text={'Button with content variant'}
         marginBottom={spacings.s}
+      />
+      <Button
+        variant={'content'}
+        text={'Button with content variant disabled'}
+        marginBottom={spacings.s}
+        disabled
+      />
+      <Button
+        variant={'content'}
+        text={'Button with content variant'}
+        marginBottom={spacings.s}
         reduceColor
       />
       <Button
         variant={'content'}
-        text={'Button with Main color as background color'}
+        text={'Button with content variant disabled'}
         marginBottom={spacings.s}
         reduceColor
-        addShadow
-        pressedBackgroundColor={colors.mainInteractiveColor}
-      />
-      <Button
-        variant={'content'}
-        text={'Button with Alternative color as background color'}
-        marginBottom={spacings.s}
-        reduceColor
-        addShadow
-        pressedBackgroundColor={colors.alternativeInteractiveColor}
-      />
-      <Button
-        variant={'content'}
-        text={'Button with Danger color as background color'}
-        marginBottom={spacings.s}
-        reduceColor
-        addShadow
-        pressedBackgroundColor={colors.dangerInteractiveColor}
-      />
-      <Button
-        variant={'content'}
-        text={'Button with Warning color as background color'}
-        marginBottom={spacings.s}
-        reduceColor
-        addShadow
-        pressedBackgroundColor={colors.warningInteractiveColor}
-      />
-      <Button
-        variant={'content'}
-        text={'Button with Success color as background color'}
-        marginBottom={spacings.s}
-        reduceColor
-        addShadow
-        pressedBackgroundColor={colors.successInteractiveColor}
+        disabled
       />
     </Box>
   );
@@ -209,6 +293,20 @@ export function ToggleButtonFragment(): JSX.Element {
       </ToggleButton>
       <ToggleButton
         variant={'main'}
+        active={false}
+        marginBottom={spacings.s}
+        disabled>
+        {() => (
+          <Text variant={'button'} color={colors.text}>
+            {'Toggle Button disabled'}
+          </Text>
+        )}
+      </ToggleButton>
+      <Text variant={'subtitle'} alignItems={'center'} marginTop={spacings.lg}>
+        Toggle Button with icon
+      </Text>
+      <ToggleButton
+        variant={'main'}
         active={active}
         onActiveChange={toggleActive}
         marginBottom={spacings.s}>
@@ -218,7 +316,26 @@ export function ToggleButtonFragment(): JSX.Element {
         variant={'main'}
         active={active}
         onActiveChange={toggleActive}
+        marginBottom={spacings.s}
+        disabled>
+        {color => <LoadIcon height={24} width={24} fill={color} />}
+      </ToggleButton>
+      <Text variant={'subtitle'} alignItems={'center'} marginTop={spacings.lg}>
+        Toggle Button with icon and useGrayVariant
+      </Text>
+      <ToggleButton
+        variant={'main'}
+        active={active}
+        onActiveChange={toggleActive}
         useGrayVariant>
+        {color => <LoadIcon height={24} width={24} fill={color} />}
+      </ToggleButton>
+      <ToggleButton
+        variant={'main'}
+        active={active}
+        onActiveChange={toggleActive}
+        useGrayVariant
+        disabled>
         {color => <LoadIcon height={24} width={24} fill={color} />}
       </ToggleButton>
     </Box>
@@ -246,7 +363,24 @@ export function RoundedToggleButtonFragment(): JSX.Element {
         active={active}
         onActiveChange={toggleActive}
         marginBottom={spacings.s}
+        disabled>
+        {color => <FacebookIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'main'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
         useGrayVariant>
+        {color => <FacebookIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'main'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
+        useGrayVariant
+        disabled>
         {color => <FacebookIcon height={24} width={24} fill={color} />}
       </RoundedToggleButton>
       <RoundedToggleButton
@@ -261,7 +395,24 @@ export function RoundedToggleButtonFragment(): JSX.Element {
         active={active}
         onActiveChange={toggleActive}
         marginBottom={spacings.s}
+        disabled>
+        {color => <AppleIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'alternative'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
         useGrayVariant>
+        {color => <AppleIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'alternative'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
+        useGrayVariant
+        disabled>
         {color => <AppleIcon height={24} width={24} fill={color} />}
       </RoundedToggleButton>
       <RoundedToggleButton
@@ -276,7 +427,24 @@ export function RoundedToggleButtonFragment(): JSX.Element {
         active={active}
         onActiveChange={toggleActive}
         marginBottom={spacings.s}
+        disabled>
+        {color => <BugIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'danger'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
         useGrayVariant>
+        {color => <BugIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'danger'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
+        useGrayVariant
+        disabled>
         {color => <BugIcon height={24} width={24} fill={color} />}
       </RoundedToggleButton>
       <RoundedToggleButton
@@ -291,7 +459,24 @@ export function RoundedToggleButtonFragment(): JSX.Element {
         active={active}
         onActiveChange={toggleActive}
         marginBottom={spacings.s}
+        disabled>
+        {color => <CheckIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'warning'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
         useGrayVariant>
+        {color => <CheckIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'warning'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
+        useGrayVariant
+        disabled>
         {color => <CheckIcon height={24} width={24} fill={color} />}
       </RoundedToggleButton>
       <RoundedToggleButton
@@ -306,7 +491,24 @@ export function RoundedToggleButtonFragment(): JSX.Element {
         active={active}
         onActiveChange={toggleActive}
         marginBottom={spacings.s}
+        disabled>
+        {color => <ChevronDownIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'success'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
         useGrayVariant>
+        {color => <ChevronDownIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'success'}
+        active={active}
+        onActiveChange={toggleActive}
+        marginBottom={spacings.s}
+        useGrayVariant
+        disabled>
         {color => <ChevronDownIcon height={24} width={24} fill={color} />}
       </RoundedToggleButton>
       <RoundedToggleButton
@@ -320,7 +522,23 @@ export function RoundedToggleButtonFragment(): JSX.Element {
         variant={'content'}
         active={active}
         onActiveChange={toggleActive}
+        marginBottom={spacings.s}
+        disabled>
+        {color => <GoogleIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'content'}
+        active={active}
+        onActiveChange={toggleActive}
         useGrayVariant>
+        {color => <GoogleIcon height={24} width={24} fill={color} />}
+      </RoundedToggleButton>
+      <RoundedToggleButton
+        variant={'content'}
+        active={active}
+        onActiveChange={toggleActive}
+        useGrayVariant
+        disabled>
         {color => <GoogleIcon height={24} width={24} fill={color} />}
       </RoundedToggleButton>
     </Box>
@@ -335,10 +553,20 @@ export function CircularIconButtonFragment(): JSX.Element {
       <CircularIconButton variant={'main'} marginBottom={spacings.s}>
         {color => <LoadIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
+      <CircularIconButton variant={'main'} marginBottom={spacings.s} disabled>
+        {color => <LoadIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
       <CircularIconButton
         variant={'main'}
         marginBottom={spacings.s}
         reduceColor>
+        {color => <LoadIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
+      <CircularIconButton
+        variant={'main'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled>
         {color => <LoadIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
       <CircularIconButton variant={'alternative'} marginBottom={spacings.s}>
@@ -347,10 +575,26 @@ export function CircularIconButtonFragment(): JSX.Element {
       <CircularIconButton
         variant={'alternative'}
         marginBottom={spacings.s}
+        disabled>
+        {color => <FilterIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
+      <CircularIconButton
+        variant={'alternative'}
+        marginBottom={spacings.s}
         reduceColor>
         {color => <FilterIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
+      <CircularIconButton
+        variant={'alternative'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled>
+        {color => <FilterIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
       <CircularIconButton variant={'danger'} marginBottom={spacings.s}>
+        {color => <TrashIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
+      <CircularIconButton variant={'danger'} marginBottom={spacings.s} disabled>
         {color => <TrashIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
       <CircularIconButton
@@ -359,7 +603,20 @@ export function CircularIconButtonFragment(): JSX.Element {
         reduceColor>
         {color => <TrashIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
+      <CircularIconButton
+        variant={'danger'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled>
+        {color => <TrashIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
       <CircularIconButton variant={'warning'} marginBottom={spacings.s}>
+        {color => <MoreVerticalIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
+      <CircularIconButton
+        variant={'warning'}
+        marginBottom={spacings.s}
+        disabled>
         {color => <MoreVerticalIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
       <CircularIconButton
@@ -368,13 +625,33 @@ export function CircularIconButtonFragment(): JSX.Element {
         reduceColor>
         {color => <MoreVerticalIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
+      <CircularIconButton
+        variant={'warning'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled>
+        {color => <MoreVerticalIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
       <CircularIconButton variant={'success'} marginBottom={spacings.s}>
         {color => <SearchIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
       <CircularIconButton
         variant={'success'}
         marginBottom={spacings.s}
+        disabled>
+        {color => <SearchIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
+      <CircularIconButton
+        variant={'success'}
+        marginBottom={spacings.s}
         reduceColor>
+        {color => <SearchIcon height={24} width={24} fill={color} />}
+      </CircularIconButton>
+      <CircularIconButton
+        variant={'success'}
+        marginBottom={spacings.s}
+        reduceColor
+        disabled>
         {color => <SearchIcon height={24} width={24} fill={color} />}
       </CircularIconButton>
     </Box>
